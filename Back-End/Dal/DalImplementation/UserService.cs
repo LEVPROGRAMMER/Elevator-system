@@ -25,7 +25,9 @@ namespace Dal.DalImplementation
                 return true;
             }
             catch
-            { return false; }
+            {
+                db.Users.Remove(item);
+                return false; }
         }
 
         public bool Delete(User item)

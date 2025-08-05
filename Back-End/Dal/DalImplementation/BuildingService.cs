@@ -37,7 +37,9 @@ namespace Dal.DalImplementation
                 return true;
             }
             catch
-            { return false; }
+            {
+                db.Buildings.Remove(item);
+                return false; }
         }
 
         public List<Building> GetAll()

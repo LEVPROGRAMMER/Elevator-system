@@ -27,7 +27,9 @@ namespace Dal.DalImplementation
                     return true;
                 }
                 catch
-                { return false; }
+                {
+                db.ElevatorCalls.Remove(item);
+                return false; }
             }
 
             public bool Delete(ElevatorCall item)

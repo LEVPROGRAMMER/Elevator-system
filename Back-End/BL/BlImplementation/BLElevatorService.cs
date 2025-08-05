@@ -77,7 +77,9 @@ namespace BL.BlImplementation
         {
             Elevator temp = Dal.Elevator.GetAll().Find(x => x.Id == filter);
             if (temp == null)
-                return null;
+                temp = Dal.Elevator.GetAll().Find(x => x.BuildingId == filter);
+                 if (temp == null)
+                 return null;
             return CastingToBl(temp);
         }
     }

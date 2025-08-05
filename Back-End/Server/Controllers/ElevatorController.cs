@@ -52,6 +52,13 @@ namespace Server.Controllers
             [HttpGet()]
             public BLElevator GetElevatorById(int Id) =>
                 Iblelevator.Read(Id);
-        }
+
+        [Route("GetElevatorByBuilding/Id")]
+        [HttpGet()]
+        public BLElevator GetElevatorByBuilding(int Id) =>
+                Iblelevator.Read(Id);
+    
+}
+
 }
 

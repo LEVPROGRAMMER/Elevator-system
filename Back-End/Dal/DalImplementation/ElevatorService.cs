@@ -42,7 +42,9 @@ namespace Dal.DalImplementation
                 return true;
             }
             catch
-            { return false; }
+            {
+                db.Elevators.Remove(item);
+                return false; }
         }
 
         public bool Update(Elevator item)

@@ -30,7 +30,9 @@ namespace Dal.DalImplementation
                 return true;
             }
             catch
-            { return false; }
+            {
+                db.ElevatorCallAssignments.Remove(item);
+                return false; }
         }
 
         public bool Delete(ElevatorCallAssignment item)

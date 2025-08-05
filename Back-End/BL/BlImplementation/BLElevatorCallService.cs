@@ -49,7 +49,7 @@ namespace BL.BlImplementation
             ElevatorCall ec = new ElevatorCall()
             {
                 Id = blelevatorcall.Id,
-                BuildingId = blelevatorcall.
+                BuildingId = blelevatorcall.BuildingId,
                 RequestedFloor = blelevatorcall.RequestedFloor,
                 DestinationFloor = blelevatorcall.DestinationFloor,
                 CallTime = blelevatorcall.CallTime,
