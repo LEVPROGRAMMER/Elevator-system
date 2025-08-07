@@ -27,9 +27,9 @@ namespace BL.BlImplementation
             };
             return tf;
         }
-        public bool Create(BLTargetFloors bltargetfloor)
+        public bool Create(int floor, int id)
         {
-            return Dal.TargetFloor.Create(CastingToDal(bltargetfloor));
+            return Dal.TargetFloor.Create(floor, id);
         }
     }
 }

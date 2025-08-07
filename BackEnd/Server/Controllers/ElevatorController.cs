@@ -27,11 +27,6 @@ namespace Server.Controllers
                 return Iblelevator.ReadAll();
             }
 
-        //[Route("AddElevator")]
-        //[HttpPost()]
-        //public bool Create([FromBody] BLElevator elevator) =>
-        //Iblelevator.Create(elevator);
-
         [Route("AddElevator")]
         [HttpPost()]
         public bool Create(BLElevator elevator) =>

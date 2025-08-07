@@ -61,7 +61,6 @@ namespace Dal.DalImplementation
                 if (ec == null)
                     throw new Exception("ElevatorCalls does not exist in DB");
 
-                // עדכון השדה בהתאם לשם השדה
                 switch (fieldName.ToLower())
                 {
                     case "buildingid":
@@ -92,32 +91,6 @@ namespace Dal.DalImplementation
                 return false;
             }
         }
-        //    public bool Update(int id , object value)
-        //    {
-        //        try
-        //        {
-        //            int index = db.ElevatorCalls.ToList().FindIndex(x => x.Id == item.Id);
-        //            if (index == -1)
-        //                throw new Exception("ElevatorCalls does not exist in DB");
-        //            ElevatorCall ec = db.ElevatorCalls.ToList()[index];
-        //         thrown    ec.Id = item.Id;
-        //            ec.BuildingId = item.BuildingId;
-        //            ec.RequestedFloor = item.RequestedFloor;
-        //            ec.DestinationFloor = item.DestinationFloor;
-        //            ec.CallTime = item.CallTime;
-        //            ec.IsHandled = item.IsHandled;
-        //            db.ElevatorCalls.ToList()[index] = ec;
-        //            db.SaveChanges();
-        //            return true;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //            return false;
-        //        }
-        //    }
     }
 }
-
-
 

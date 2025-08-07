@@ -9,9 +9,6 @@ namespace Dal.DalApi
 {
     public interface ITargetFloor
     {
-        //public List<TargetFloor> GetAll();
-
-        //public List<TargetFloor> Read(int id);
         bool Create(int value, int id);
     }
 }

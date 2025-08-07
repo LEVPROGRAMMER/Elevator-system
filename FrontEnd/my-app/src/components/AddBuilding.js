@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './AddBuilding.css';
 import { useSelector } from 'react-redux';
 
-function AddBuilding({ onBack }) {
+function AddBuilding() {
     const [buildingData, setBuildingData] = useState({
         userId: '',
         name: '',

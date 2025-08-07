@@ -44,37 +44,47 @@ function Login() {
     }
 
     return (
-        <div className="App">
-            <form onSubmit={handleSubmit}>
+        <div className="login-container">
+            <h2 className="login-title">{isRegistering ? 'Register' : 'Login'}</h2>
+            <form className="login-form" onSubmit={handleSubmit}>
                 {isRegistering && (
+                    <div className="form-group">
+                        <label htmlFor="id">ID</label>
+                        <input
+                            type="text"
+                            name="id"
+                            value={userData.id}
+                            onChange={handleChange}
+                            placeholder="ID"
+                            required={isRegistering}
+                        />
+                    </div>
+                )}
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
                     <input
                         type="text"
-                        name="id"
-                        value={userData.id}
+                        name="email"
+                        value={userData.email}
                         onChange={handleChange}
-                        placeholder="ID"
-                        required={isRegistering}
+                        placeholder="Email"
+                        required
                     />
-                )}
-                <input
-                    type="text"
-                    name="email"
-                    value={userData.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    value={userData.password}
-                    onChange={handleChange}
-                    placeholder="Password"
-                    required
-                />
-                <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={userData.password}
+                        onChange={handleChange}
+                        placeholder="Password"
+                        required
+                    />
+                </div>
+                <button className="login-btn" type="submit">{isRegistering ? 'Register' : 'Login'}</button>
             </form>
-            <button onClick={toggleRegistering}>
+            <button className="register-btn" onClick={toggleRegistering}>
                 {isRegistering ? 'Switch to Login' : 'Switch to Register'}
             </button>
         </div>

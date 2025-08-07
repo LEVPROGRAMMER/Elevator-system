@@ -8,9 +8,6 @@
 }
 
 .elevator {
-    border: 1px solid #171313;
-    background-color: #a0b0bb6a;
-    margin-top: 20px;
 }
 
 .floors {
@@ -35,15 +32,7 @@
 }
 
 
-button {
-    color: orange; 
-    background-color: white; 
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-    margin: 5px 0;
-}
+
 
 
 .blink {
@@ -65,24 +54,27 @@ button {
     font-weight: bold;
     margin-bottom: 5px;
 }
-
 .floor-buttons {
+
     display: flex;
-    justify-content: center; 
-    margin: 20px 0; 
+    justify-content: center;
+    gap: 14px;
+    margin: 20px 0;
 }
-
 .floor-buttons button {
-    color: orange; 
-    background-color: white; 
-    border: solid 1px; 
-    border-radius: 5px; 
-    padding: 10px 15px; 
-    margin: 0 5px; 
-    cursor: pointer; 
-    transition: background-color 0.3s; 
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(74,144,226,0.15);
+    transition: background 0.2s, transform 0.1s;
 }
-
 .floor-buttons button:hover {
-    background-color: rgba(255, 166, 0, 0.489); 
+    background: #357ab8;
+    transform: scale(1.08);
 }

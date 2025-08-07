@@ -17,7 +17,5 @@ namespace BL.BlApi
 
         public bool Update(T item);
 
-        //public <T> Read(Predicate<T> filter);
-
     }
 }

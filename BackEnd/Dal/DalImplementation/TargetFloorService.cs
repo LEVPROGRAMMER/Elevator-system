@@ -37,8 +37,7 @@ namespace Dal.DalImplementation
                 int position = (int)(db.TargetFloors
                     .Where(tf => tf.ElevatorId == item.ElevatorId).Select(tf => tf.Position).DefaultIfEmpty(0).Max() + 1);
 
-                item.Position = position; // עדכון ה-Position של ה-item
-
+                item.Position = position; 
                 db.TargetFloors.Add(item);
                 db.SaveChanges();
                 return true;

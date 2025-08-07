@@ -26,7 +26,6 @@ namespace BL
             collection.AddSingleton<IBLElevator, BLElevatorService>();
             collection.AddSingleton<IBLElevatorCall, BLElevatorCallService>();
             collection.AddSingleton<IBLElevatorCallAssignment, BLElevatorCallAssignmentService>();
-            //collection.AddSingleton< BLTargetFloorService>();
 
 
             var ServiceProvider = collection.BuildServiceProvider();
@@ -35,7 +34,6 @@ namespace BL
             BLElevator = ServiceProvider.GetRequiredService<IBLElevator>();
             BLElevatorCall = ServiceProvider.GetRequiredService<IBLElevatorCall>();
             BLElevatorCallAssignment = ServiceProvider.GetRequiredService<IBLElevatorCallAssignment>();
-            //BLElevatorCall = ServiceProvider.GetRequiredService<IBLElevatorCall>();
 
 
         }

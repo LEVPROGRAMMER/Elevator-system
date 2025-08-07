@@ -7,12 +7,6 @@ const ElevatorCall = (props) => {
     const [showFloorSelection, setShowFloorSelection] = useState(false);
     const elevatorCallId = 1;
 
-    const handleFloorSelection = async (floor) => {
-        console.log("gfgs")
-        setSelectedFloor(floor);
-        setShowFloorSelection(false);
-    };
-
     const handleButtonClick = () => {
         const data = {
             id: 5642,

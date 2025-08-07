@@ -22,11 +22,6 @@ namespace BL.BlImplementation
             this.Dal = manager;
         }
 
-        //public void NotifyElevatorUpdate(BLElevator elevator)
-        //{
-        //    // שלח עדכון ללקוחות דרך SignalR
-        //    _hubContext.Clients.All.SendAsync("ReceiveElevatorUpdate", elevator);
-        //}
         public List<BLElevator> ReadAll() =>
             CastListToBl(Dal.Elevator.GetAll());
 
@@ -119,9 +114,5 @@ namespace BL.BlImplementation
                  return null;
             return CastingToBl(temp);
         }
-         //public List<BLTargetFloors> Read(int id)
- //{
- //           return ToBLOD(dmFullOrder.OrderDetails.Read(id));
- //}
     }
 }

@@ -1,8 +1,10 @@
 using BL;
-using Microsoft.OpenApi.Models;
+using BL.BlImplementation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<BLManager>();
+//builder.Services.AddSingleton<BLElevatorService>();
+//builder.Services.AddSingleton<BLElevatorCallService>();
 
 builder.Services.AddSignalR();
 
@@ -17,8 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// הוספת שירות הרקע לניהול המעליות
-builder.Services.AddHostedService<ElevatorBackgroundService>(); // הוסף את השורה הזו
+builder.Services.AddHostedService<ElevatorBackgroundService>();
 
 var app = builder.Build();
 
@@ -33,4 +34,8 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapControllers();
+app.MapHub<ElevatorHub>("/elevatorHub"); 
 app.Run();
+
+
+

@@ -2,9 +2,7 @@ import axios from 'axios';
 
 export const fetchBuildingData = async (id) => {
     try {
-        debugger
         const response = await axios.get(`https://localhost:7229/api/Building/GetBuildingByUser/Id?Id=${id}`);
-        console.log("fgfg")
                 console.log(response.data);
 
         return response.data;

@@ -47,14 +47,6 @@ npm start
 ## Technology Choices
 
 - **Backend:** ASP.NET Core was chosen for its robust API capabilities and ease of integration with SQL Server.
-- **Frontend:** React was selected for its component-based architecture, allowing for a dynamic user interface.
+- **Frontend:** React.js was selected for its component-based architecture, allowing for a dynamic user interface.
 - **Database:** SQL Server is used for its reliability and support for complex queries.
 - **Real-time** Communication: SignalR is implemented for real-time updates between the server and client.
-
-## Bonus Task
-
-If you completed the bonus task, please specify which features you implemented and how they enhance the system.
-
-## Important Note on Real-Time Communication
-
-While SignalR is recommended for real-time communication, if you are unfamiliar with it, you may implement an alternative polling mechanism. In this case, please indicate your choice in this README and justify your decision.

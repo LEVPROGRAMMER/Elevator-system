@@ -34,11 +34,7 @@ public class ElevatorBackgroundService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             _logger.LogInformation("Running elevator service...");
-
-            // 1. טעינת מצב מעליות
             var elevators = _elevatorService.ReadAll();
-
-            // 2. עיבוד קריאות ממתינות
             var calls = _elevatorCallService.ReadAll()
     .Where(c => c.IsHandled == false)
     .ToList();
@@ -47,18 +43,15 @@ public class ElevatorBackgroundService : BackgroundService
                 var elevator = elevators.FirstOrDefault(e => e.Status == BLElevatorStatus.Idle);
                 if (elevator != null)
                 {
-                    // טיפול בקריאה
                     ProcessCall(elevator, call);
                 }
             }
 
-            // 3. קידום מעלית
             foreach (var elevator in elevators)
             {
                 await MoveElevator(elevator);
             }
 
-            // 4. שליחת עדכונים ללקוח
             await _hubContext.Clients.All.SendAsync("ReceiveElevatorUpdate", elevators);
 
             await Task.Delay(TimeSpan.FromSeconds(_interval), stoppingToken);
@@ -67,22 +60,20 @@ public class ElevatorBackgroundService : BackgroundService
 
     private void ProcessCall(BLElevator elevator, BLElevatorCalls call)
     {
-        // לוגיקה לטיפול בקריאה
         elevator.AddTargetFloor(call.DestinationFloor.Value);
         call.IsHandled = true;
-        _elevatorCallService.Update(call.Id, "IsHandled", true); // עדכון שהקריאה טופלה
+        _elevatorCallService.Update(call.Id, "IsHandled", true); 
     }
 
     private async Task MoveElevator(BLElevator elevator)
     {
-        // לוגיקה לקידום המעלית
         if (elevator.TargetFloors.Count > 0)
         {
-            elevator.CurrentFloor = elevator.TargetFloors.First();
+            elevator.CurrentFloor = elevator.TargetFloors.First().Floor;
             elevator.TargetFloors.RemoveAt(0);
             elevator.Status = BLElevatorStatus.OpeningDoors;
 
-            await Task.Delay(2000); // דלתות פתוחות
+            await Task.Delay(2000);
             elevator.DoorStatus = BLElevatorDoorStatus.Open;
             elevator.Status = BLElevatorStatus.Idle;
         }

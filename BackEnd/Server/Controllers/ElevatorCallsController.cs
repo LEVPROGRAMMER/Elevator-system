@@ -39,11 +39,6 @@ namespace Server.Controllers
         public bool UpDate(int id, string fileName , object value) =>
         IblelevatorCall.Update(id, fileName, value);
 
-        //[Route("UpDateElevatorCall/Id")]
-        //[HttpPut()]
-        //public bool UpDate(BLElevatorCalls elevatorCall) =>
-        //    IblelevatorCall.Update(elevatorCall);
-
         [Route("GetElevatorCallById/Id")]
         [HttpGet()]
         public BLElevatorCalls GetElevatorCallById(int Id) =>
