@@ -9,7 +9,7 @@ namespace BL.BlApi
 {
     public interface IBLBuilding : IBLcrud<BLBuilding>
     {
-        BLBuilding Read(int filter);
+        List<BLBuilding >Read(int filter);
 
     }
 }

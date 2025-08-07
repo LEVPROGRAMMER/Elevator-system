@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dal.DalApi;
 using Dal.Do;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dal.DalImplementation
 {
@@ -18,7 +19,7 @@ namespace Dal.DalImplementation
 
         public List<Elevator> GetAll()
         {
-            return db.Elevators.ToList();
+            return db.Elevators.Include(o => o.TargetFloors).ToList();
         }
 
         public bool Create(Elevator item)
@@ -61,6 +62,7 @@ namespace Dal.DalImplementation
                 e.DoorStatus = item.DoorStatus;
                 e.CurrentFloor = item.CurrentFloor;
                 e.Status = item.Status;
+                e.TargetFloors = item.TargetFloors;
                 db.Elevators.ToList()[index] = e;
                 db.SaveChanges();
                 return true;
@@ -74,7 +76,7 @@ namespace Dal.DalImplementation
 
         public List<Elevator> Read(Predicate<Elevator> filter)
         {
-            return db.Elevators.ToList().FindAll(x => filter(x));
+            return db.Elevators.Include(x => x.TargetFloors).ToList().FindAll(x => filter(x));
         }
 
     }

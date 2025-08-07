@@ -23,6 +23,8 @@ public partial class dbcontext : DbContext
 
     public virtual DbSet<ElevatorCallAssignment> ElevatorCallAssignments { get; set; }
 
+    public virtual DbSet<TargetFloor> TargetFloors { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -87,6 +89,15 @@ public partial class dbcontext : DbContext
             entity.HasOne(d => d.Elevator).WithMany(p => p.ElevatorCallAssignments)
                 .HasForeignKey(d => d.ElevatorId)
                 .HasConstraintName("FK__ElevatorC__Eleva__0C85DE4D");
+        });
+
+        modelBuilder.Entity<TargetFloor>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TargetFl__3214EC07922E3729");
+
+            entity.HasOne(d => d.Elevator).WithMany(p => p.TargetFloors)
+                .HasForeignKey(d => d.ElevatorId)
+                .HasConstraintName("FK__TargetFlo__Floor__0F624AF8");
         });
 
         modelBuilder.Entity<User>(entity =>

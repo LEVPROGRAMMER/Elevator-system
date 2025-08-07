@@ -67,9 +67,9 @@ namespace BL.BlImplementation
             return Dal.User.Update(CastingToDal(bluser));
         }
 
-        public BLUser Read(int filter)
+        public BLUser Read(string password)
         {
-            User temp = Dal.User.GetAll().Find(x => x.Id == filter);
+            User temp = Dal.User.GetAll().Find(x => x.Password.Equals(password));
             if (temp == null)
                 return null;
             return CastingToBl(temp);

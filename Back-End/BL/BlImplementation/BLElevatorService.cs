@@ -32,7 +32,8 @@ namespace BL.BlImplementation
                 CurrentFloor = dalelevator.CurrentFloor,
                 Status = (BLElevatorStatus?)dalelevator.Status,
                 Direction = (BLElevatorDirection?)dalelevator.Direction,
-                DoorStatus = (BLElevatorDoorStatus?)dalelevator.DoorStatus
+                DoorStatus = (BLElevatorDoorStatus?)dalelevator.DoorStatus,
+                TargetFloors = ToBLTF((List<TargetFloor>)dalelevator.TargetFloors)
             };
             return e;
         }
@@ -43,7 +44,34 @@ namespace BL.BlImplementation
             list.ForEach(x => lst.Add(CastingToBl(x)));
             return lst;
         }
-
+        public List<TargetFloor> ToDalTF(List<BLTargetFloors> lblod)
+        {
+            List<TargetFloor> ltf = new List<TargetFloor>();
+            lblod.ForEach(x => ltf.Add(convertToDalTF(x)));
+            return ltf;
+        }
+        public List<BLTargetFloors> ToBLTF(List<TargetFloor> ltf)
+        {
+            List<BLTargetFloors> lbltf = new List<BLTargetFloors>();
+            ltf.ForEach(x => lbltf.Add(convertToBLTF(x)));
+            return lbltf;
+        }
+        public TargetFloor convertToDalTF(BLTargetFloors bltf)
+        {
+            TargetFloor tf = new TargetFloor();
+            tf.Id = bltf.Id;
+            tf.ElevatorId = bltf.ElevatorId;
+            tf.Floor = bltf.Floor;
+            return tf;
+        }
+        public BLTargetFloors convertToBLTF(TargetFloor tf)
+        {
+            BLTargetFloors bltf = new BLTargetFloors();
+            bltf.Id = tf.Id;
+            bltf.ElevatorId = tf.ElevatorId;
+            bltf.Floor = tf.Floor;
+            return bltf;
+        }
         public Elevator CastingToDal(BLElevator blelevator)
         {
             Elevator e = new Elevator()
@@ -53,7 +81,8 @@ namespace BL.BlImplementation
                 CurrentFloor = (int)blelevator.CurrentFloor,
                 Status = (int)blelevator.Status,
                 Direction= (int)blelevator.Direction,
-                DoorStatus = (int)blelevator.DoorStatus
+                DoorStatus = (int)blelevator.DoorStatus,
+                TargetFloors = ToDalTF(blelevator.TargetFloors)
             };
             return e;
         }
@@ -82,5 +111,9 @@ namespace BL.BlImplementation
                  return null;
             return CastingToBl(temp);
         }
+         //public List<BLTargetFloors> Read(int id)
+ //{
+ //           return ToBLOD(dmFullOrder.OrderDetails.Read(id));
+ //}
     }
 }

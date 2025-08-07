@@ -43,9 +43,9 @@ namespace Server.Controllers
             public bool UpDate(BLBuilding building) =>
                 Iblbuilding.Update(building);
 
-            [Route("GetBuilding/Id")]
+            [Route("GetBuildingByUser/Id")]
             [HttpGet()]
-            public BLBuilding GetBuildingById(int Id) =>
+            public List<BLBuilding> GetBuildingById(int Id) =>
                 Iblbuilding.Read(Id);
         }
     

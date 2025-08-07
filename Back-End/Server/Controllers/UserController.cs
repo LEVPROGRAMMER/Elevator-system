@@ -39,9 +39,9 @@ namespace Server.Controllers
         public bool UpDate(BLUser user) =>
            IblUser.Update(user);
 
-        [Route("GetUserById/Id")]
+        [Route("GetUserByPassword/password")]
         [HttpGet()]
-        public BLUser GetUserById(int Id) =>
-            IblUser.Read(Id);
+        public BLUser GetUserByPassword(string password) =>
+            IblUser.Read(password);
     }
 }

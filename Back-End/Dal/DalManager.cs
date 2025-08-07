@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Authentication.ExtendedProtection;
 using System.Text;
 using System.Threading.Tasks;
+using Dal.DalApi;
 using Dal.DalImplementation;
 using Dal.Do;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,31 +13,32 @@ namespace Dal
 {
     public class DalManager
     {
-        public ElevatorService Elevator { get; set; }
-        public UserService User { get; set; }
-        public ElevatorCallService ElevatorCall { get; set; }
+        public IElevator Elevator { get; set; }
+        public IUser User { get; set; }
+        public IElevatorCall ElevatorCall { get; set; }
 
-        public BuildingService Building { get; set; }
-        public ElevatorCallAssignmentService ElevatorCallAssignment { get; set; }
-
+        public IBuilding Building { get; set; }
+        public IElevatorCallAssignment ElevatorCallAssignment { get; set; }
+         public ITargetFloor TargetFloor { get; set; }
         public DalManager()
         {
             ServiceCollection collection = new ServiceCollection();
             collection.AddSingleton<dbcontext>();
-            collection.AddSingleton<ElevatorService>();
-            collection.AddSingleton<UserService>();
-            collection.AddSingleton<BuildingService>();
-            collection.AddSingleton<ElevatorCallAssignmentService>();
-            collection.AddSingleton<ElevatorCallService>();
+            collection.AddSingleton<IElevator, ElevatorService>();
+            collection.AddSingleton<IUser, UserService>();
+            collection.AddSingleton<IBuilding,BuildingService>();
+            collection.AddSingleton<IElevatorCallAssignment,ElevatorCallAssignmentService>();
+            collection.AddSingleton<IElevatorCall,ElevatorCallService>();
+            collection.AddSingleton<ITargetFloor,TargetFloorService>();
 
 
             var serviceprovider = collection.BuildServiceProvider();
-            Elevator = serviceprovider.GetRequiredService<ElevatorService>();
-            User = serviceprovider.GetRequiredService<UserService>();
-            Building = serviceprovider.GetRequiredService<BuildingService>();
-            ElevatorCallAssignment = serviceprovider.GetRequiredService<ElevatorCallAssignmentService>();
-            ElevatorCall = serviceprovider.GetRequiredService<ElevatorCallService>();
-
+            Elevator = serviceprovider.GetRequiredService<IElevator>();
+            User = serviceprovider.GetRequiredService<IUser>();
+            Building = serviceprovider.GetRequiredService<IBuilding>();
+            ElevatorCallAssignment = serviceprovider.GetRequiredService<IElevatorCallAssignment>();
+            ElevatorCall = serviceprovider.GetRequiredService<IElevatorCall>();
+            TargetFloor = serviceprovider.GetRequiredService<ITargetFloor>();
         }
     }
 }

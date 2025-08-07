@@ -9,6 +9,6 @@ namespace BL.BlApi
 {
     public interface IBLUser : IBLcrud<BLUser>
     {
-        BLUser Read(int filter);
+        BLUser Read(string password);
     }
 }

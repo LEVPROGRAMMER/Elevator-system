@@ -70,12 +70,13 @@ namespace BL.BlImplementation
                 return Dal.Building.Update(CastingToDal(blbuilding));
             }
 
-            public BLBuilding Read(int filter)
+            public List<BLBuilding> Read(int filter)
             {
-                Building temp = Dal.Building.GetAll().Find(x => x.Id == filter);
+            List<Building> temp = new List<Building>();
+               temp= Dal.Building.GetAll().FindAll(x => x.UserId == filter);
                 if (temp == null)
                     return null;
-                return CastingToBl(temp);
+                return CastListToBl(temp);
             }
 
         }

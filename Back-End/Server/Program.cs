@@ -4,23 +4,24 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<BLManager>();
 
-//Add services to the container.
+builder.Services.AddSignalR();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://localhost:3000", "development site")
     .AllowAnyHeader().AllowAnyMethod()
-        .AllowCredentials()); // אם צריך לשלוח קרדנציאלים
-
+        .AllowCredentials());
 });
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.
-    AddSwaggerGen();
+builder.Services.AddSwaggerGen();
 
+// הוספת שירות הרקע לניהול המעליות
+builder.Services.AddHostedService<ElevatorBackgroundService>(); // הוסף את השורה הזו
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -29,8 +30,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseAuthorization();
+
 app.MapControllers();
 app.Run();

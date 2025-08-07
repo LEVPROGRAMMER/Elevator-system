@@ -20,4 +20,6 @@ public partial class Elevator
     public virtual Building Building { get; set; } = null!;
 
     public virtual ICollection<ElevatorCallAssignment> ElevatorCallAssignments { get; set; } = new List<ElevatorCallAssignment>();
+
+    public virtual ICollection<TargetFloor> TargetFloors { get; set; } = new List<TargetFloor>();
 }
