@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BL.Bo;
-using Dal.Do;
-using Dal;
 using BL.BlApi;
+using Dal;
+using Dal.Do;
+//using Dal;
 
 namespace BL.BlImplementation
 {
-    
-       
-
-
     public class BLElevatorService : IBLElevator
     {
         DalManager Dal;

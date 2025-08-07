@@ -1,0 +1,16 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.suo
+*.sln.ide
+*.vscode/
+*vs/
+

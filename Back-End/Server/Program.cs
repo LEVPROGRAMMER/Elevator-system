@@ -3,9 +3,6 @@ using BL.BlImplementation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<BLManager>();
-//builder.Services.AddSingleton<BLElevatorService>();
-//builder.Services.AddSingleton<BLElevatorCallService>();
-
 builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>

@@ -12,7 +12,6 @@ namespace BL
         public IBLBuilding BLBuilding { get; }
         public IBLElevator BLElevator { get; }
         public IBLElevatorCall BLElevatorCall { get; }
-
         public IBLElevatorCallAssignment BLElevatorCallAssignment { get; }
 
 
