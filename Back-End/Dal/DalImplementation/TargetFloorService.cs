@@ -26,10 +26,14 @@ namespace Dal.DalImplementation
         }
         public List<TargetFloor> GetAll() => db.TargetFloors.ToList();
 
-        public bool Create(TargetFloor item)
+        public bool Create(int floor, int elevatorId)
         {
+
             try
             {
+                TargetFloor item = new TargetFloor();
+                item.ElevatorId = elevatorId;
+                item.Floor = floor;
                 int position = (int)(db.TargetFloors
                     .Where(tf => tf.ElevatorId == item.ElevatorId).Select(tf => tf.Position).DefaultIfEmpty(0).Max() + 1);
 

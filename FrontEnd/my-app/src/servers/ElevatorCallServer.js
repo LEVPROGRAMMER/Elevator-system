@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ElevatorServer from './ElevatorServer';
 const url = 'https://localhost:7229/api/ElevatorCalls/'
 
 export const addElevatorCall = async (elevatorCall) => {
@@ -15,6 +16,7 @@ export const addElevatorCall = async (elevatorCall) => {
 
 export const updateElevatorCall = async (id, fileName, value) => {
     debugger
+    <ElevatorServer></ElevatorServer>
     try {
         const response = await axios.put(`${url}UpDateElevatorCall/${id}`,fileName, value );
         console.log(response.data);

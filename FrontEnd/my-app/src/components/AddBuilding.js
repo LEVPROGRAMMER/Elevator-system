@@ -12,8 +12,7 @@ function AddBuilding({ onBack }) {
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    // שליפת userId מה-state של Redux כאן
-    const userId = useSelector(state => state.userId); // גישה למשתנה userId
+    const userId = useSelector(state => state.userId); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -95,15 +94,6 @@ function AddBuilding({ onBack }) {
         <div className="add-building-container">
             <div className="form-wrapper">
                 <div className="header-with-back">
-                    {/* {onBack && (
-                        <button
-                            type="button"
-                            onClick={onBack}
-                            className="back-button"
-                        >
-                            ← Back to Dashboard
-                        </button>
-                    )} */}
                     <h2>Add New Building</h2>
                 </div>
 

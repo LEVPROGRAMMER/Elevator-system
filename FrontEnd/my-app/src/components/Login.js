@@ -13,8 +13,8 @@ function Login() {
         password: '',
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isRegistering, setIsRegistering] = useState(false); // מצב לרישום
-    const dispatch = useDispatch(); 
+    const [isRegistering, setIsRegistering] = useState(false); 
+       const dispatch = useDispatch(); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,13 +30,13 @@ function Login() {
         debugger;
 
         setUserData({ ...userData, id: data.id });
-            dispatch(setUserId(data.id)); // שולח את ה-userId ל-Redux
+            dispatch(setUserId(data.id)); 
 
         setIsLoggedIn(true);
     };
 
     const toggleRegistering = () => {
-        setIsRegistering(!isRegistering); // מתחלף בין מצב התחברות לרישום
+        setIsRegistering(!isRegistering); 
     };
 
     if (isLoggedIn) {

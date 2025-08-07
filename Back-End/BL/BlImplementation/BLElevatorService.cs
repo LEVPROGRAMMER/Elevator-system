@@ -22,11 +22,11 @@ namespace BL.BlImplementation
             this.Dal = manager;
         }
 
-        public void NotifyElevatorUpdate(BLElevator elevator)
-        {
-            // שלח עדכון ללקוחות דרך SignalR
-            _hubContext.Clients.All.SendAsync("ReceiveElevatorUpdate", elevator);
-        }
+        //public void NotifyElevatorUpdate(BLElevator elevator)
+        //{
+        //    // שלח עדכון ללקוחות דרך SignalR
+        //    _hubContext.Clients.All.SendAsync("ReceiveElevatorUpdate", elevator);
+        //}
         public List<BLElevator> ReadAll() =>
             CastListToBl(Dal.Elevator.GetAll());
 
@@ -39,8 +39,8 @@ namespace BL.BlImplementation
                 BuildingId = dalelevator.BuildingId,
                 CurrentFloor = dalelevator.CurrentFloor,
                 Status = (BLElevatorStatus?)dalelevator.Status,
-                Direction = (BLElevatorDirection?)dalelevator.Direction,
-                DoorStatus = (BLElevatorDoorStatus?)dalelevator.DoorStatus,
+                Direction = (BLElevatorDirection)dalelevator.Direction,
+                DoorStatus = (BLElevatorDoorStatus)dalelevator.DoorStatus,
                 TargetFloors = ToBLTF((List<TargetFloor>)dalelevator.TargetFloors)
             };
             return e;

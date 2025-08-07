@@ -95,16 +95,6 @@ public class BLElevatorCallService : IBLElevatorCall
     {
         this.Dal = manager;
     }
-    public bool Create(BLElevatorCalls blelevatorcall)
-    {
-        bool result = Dal.ElevatorCall.Create(CastingToDal(blelevatorcall));
-        if (result)
-        {
-            // שלח עדכון על קריאה חדשה
-            _hubContext.Clients.All.SendAsync("ElevatorCallHandled", blelevatorcall);
-        }
-        return result;
-    }
 
     public List<BLElevatorCalls> ReadAll() =>
         CastListToBl(Dal.ElevatorCall.GetAll());

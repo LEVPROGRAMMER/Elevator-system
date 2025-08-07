@@ -32,7 +32,6 @@ namespace Dal.DalImplementation
                 return false;
             }
         }
-EntityFrameworkCore
         public bool Delete(ElevatorCall item)
         {
             try

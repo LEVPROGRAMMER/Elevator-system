@@ -16,26 +16,24 @@ const ElevatorCall = (props) => {
     const handleButtonClick = () => {
         const data = {
             id: 5642,
-            buildingId: props.building, // תזין את ה-ID של הבניין כאן
+            buildingId: props.building, 
             requestedFloor: props.floor,
             destinationFloor: selectedFloor,
-            callTime: new Date().toISOString(), // שעה נוכחית בפורמט ISO
+            callTime: new Date().toISOString(), 
             isHandled: true,
         };
         addElevatorCall(data)
             .then(data => console.log('Elevator call added:', data))
             .catch(error => console.error('Error:', error));
 
-        setShowFloorSelection(true); // להציג את בחירת הקומות לאחר הצלחה
+        setShowFloorSelection(true); 
     };
 
     useEffect(() => {
         handleButtonClick();
-    }, []); // ריק כדי להפעיל רק בטעינה הראשונה
-
+    }, []); 
     return (
         <div>
-            {/* <div>{elevatorCallId}</div> */}
         </div>
     );
 };

@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux';
 import Building from './Building';
 
 function BuildingView() {
-    const [buildings, setBuildings] = useState([]); // עדכון מה-state המקורי
+    const [buildings, setBuildings] = useState([]);
     const [elevators, setElevators] = useState([]);
     const [elevatorCalls, setElevatorCalls] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [callFloor, setCallFloor] = useState('');
-    const userId = useSelector(state => state.userId); // גישה למשתנה userId
+    const userId = useSelector(state => state.userId); 
     const [selectedBuilding, setSelectedBuilding] = useState(null);
 
     useEffect(() => {
@@ -56,7 +56,7 @@ function BuildingView() {
     };
 
     const openBuilding = (building) => {
-        setSelectedBuilding(building); // עדכן את ה-state עם הבניין שנבחר
+        setSelectedBuilding(building); 
     };
 
 
@@ -108,12 +108,6 @@ function BuildingView() {
             <div className="building-view-container">
                 <div className="building-view-wrapper">
                     <div className="header-section">
-                        {/* <button
-                        onClick={onBack}
-                        className="back-button"
-                    >
-                        ← Back to Dashboard
-                    </button> */}
                         <h1>Building:</h1>
                     </div>
 
@@ -128,7 +122,6 @@ function BuildingView() {
                                     <h3>Building Details</h3>
                                     <p><strong>Name:</strong> {building?.name}</p>
                                     <p><strong>Number of Floors:</strong> {building?.numberOfFloors || 'Not available'}</p>
-                                    {/* <p><strong>Number of Elevators:</strong> {elevators.length}</p> */}
                                 </div>
                             ))}
                         </div>
@@ -142,7 +135,7 @@ function BuildingView() {
 
             </div>
             <div className="building">
-            {selectedBuilding && <Building building={selectedBuilding} />} {/* הצג את הקומפוננטה אם יש בניין נבחר */}
+            {selectedBuilding && <Building building={selectedBuilding} />}
 </div>
         </div>
     );

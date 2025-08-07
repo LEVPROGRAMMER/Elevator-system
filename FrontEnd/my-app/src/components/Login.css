@@ -1,4 +1,4 @@
-/* .App {
+.App {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,7 +33,7 @@ button {
 
 button:hover {
     background-color: #0056b3;
-} */
+} 
 .auth-container {
     max-width: 400px;
     margin: 0 auto;
@@ -91,4 +91,4 @@ input {
     text-align: center;
     color: red;
     margin-top: 10px;
-}
+} 
