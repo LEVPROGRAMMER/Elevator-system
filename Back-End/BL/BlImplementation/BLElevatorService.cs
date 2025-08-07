@@ -10,6 +10,10 @@ using BL.BlApi;
 
 namespace BL.BlImplementation
 {
+    
+       
+
+
     public class BLElevatorService : IBLElevator
     {
         DalManager Dal;
@@ -18,7 +22,11 @@ namespace BL.BlImplementation
             this.Dal = manager;
         }
 
-
+        public void NotifyElevatorUpdate(BLElevator elevator)
+        {
+            // שלח עדכון ללקוחות דרך SignalR
+            _hubContext.Clients.All.SendAsync("ReceiveElevatorUpdate", elevator);
+        }
         public List<BLElevator> ReadAll() =>
             CastListToBl(Dal.Elevator.GetAll());
 
