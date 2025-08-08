@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux';
 import store from '../src/redux/Store'; 
-import ElevatorServer from './servers/ElevatorServer';
 import Login from './components/Login';
 
 function App() {
@@ -8,8 +7,7 @@ function App() {
         <Provider store={store}> 
             <div className="App">
                 <header>
-                    <Login></Login>
-                    {/* <ElevatorServer></ElevatorServer> */}
+                    <Login></Login>  
                 </header>
             </div>
         </Provider>

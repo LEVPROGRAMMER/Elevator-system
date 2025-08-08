@@ -290,7 +290,6 @@
     background: rgba(40, 167, 69, 0.8);
 }
 
-/* Responsive Design */
  @media (max-width: 768px) {
     .building-info {
         grid-template-columns: 1fr;

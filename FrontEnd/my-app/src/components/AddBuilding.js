@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './AddBuilding.css';
 import { useSelector } from 'react-redux';
+import { createBuilding } from './servers/BuildingService';
+import { createElevator } from './servers/ElevatorService';
 
 function AddBuilding() {
     const [buildingData, setBuildingData] = useState({
@@ -26,28 +28,14 @@ function AddBuilding() {
         e.preventDefault();
         setMessage('');
         setIsLoading(true);
-        debugger
         try {
-            debugger
             const building = {
                 id: 1,
                 userId: userId,
                 name: buildingData.name,
                 numberOfFloors: parseInt(buildingData.floors)
             };
-            const buildingResponse = await fetch('https://localhost:7229/api/Building/AddBuilding/Building', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(building),
-            });
-
-            if (!buildingResponse.ok) {
-                throw new Error('Error adding building');
-            }
-
-            const buildingResult = await buildingResponse.json();
+            const buildingResult = await createBuilding(building);
             console.log('Building created:', buildingResult);
 
             const elevator = {
@@ -58,20 +46,7 @@ function AddBuilding() {
                 doorStatus: 0,
                 targetFloors: []
             };
-
-            const elevatorResponse = await fetch('https://localhost:7229/api/Elevator/AddElevator', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(elevator),
-            });
-
-            if (!elevatorResponse.ok) {
-                throw new Error('Error creating elevator');
-            }
-
-            const elevatorResult = await elevatorResponse.json();
+            const elevatorResult = await createElevator(elevator);
             console.log('Elevator created:', elevatorResult);
 
             setMessage(`Building "${buildingData.name}" created successfully with automatic elevator!`);
@@ -145,6 +120,5 @@ function AddBuilding() {
             </div>
         </div>
     );
-}
-
+};
 export default AddBuilding;

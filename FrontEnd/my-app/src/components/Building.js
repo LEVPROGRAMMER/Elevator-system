@@ -1,88 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import './Building.css';
-import ElevatorCall from './ElevatorCall';
-import Elevator from './Elevator';
-import { updateElevatorCall } from '../servers/ElevatorCallServer';
-import { fetchBuildingData } from '../servers/BuildingServer';
-import AddBuilding from './AddBuilding';
-import BuildingView from './BuildingView';
+import { Box, Button, Tooltip, Typography } from "@mui/material";
+import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 
-const Building = (promps) => {
-    debugger
-const [data, setData] = useState({});
-const [showElevator, setShowElevator] = useState(false);
-const [currentFloor, setCurrentFloor] = useState(0);
-const [status, setStatus] = useState('Idle');
-const [direction, setDirection] = useState('none');
-const [doorStatus, setDoorStatus] = useState('closed');
-const [activeFloor, setActiveFloor] = useState(null);
-const [showFloorSelection, setShowFloorSelection] = useState(false); // מצב חדש
+export default function Building({
+  floors,
+  currentFloor,
+  isMoving,
+  targetFloor,
+  name,
+  statusMessage,
+  onRequestFloor
+}) {
+  return (
+    <Box
+      className="hide-scrollbar building-visual"
+      sx={{
+        flex: 1,
+        maxHeight: { xs: 480, sm: 900 },
+        minHeight: 320,
+        minWidth: 320,
+        width: '100%',
+        overflow: "hidden",
+        margin: '0 auto',
+      }}
+    >
+      {name && (
+        <Typography variant="subtitle1" sx={{ px: 1, py: 0.5 }}>
+          Name: {name}
+        </Typography>
+      )}
 
-const handleButtonClick = (floor, direction) => {
-    setActiveFloor(floor);
-    setShowElevator(true);
-    setCurrentFloor(floor);
-    setDirection(direction);
-    setShowFloorSelection(true); 
-
-   
-};
-
-const ElevatorButton = ({ floor, direction }) => {
-    const isBlinking = activeFloor === floor;
-    return (
-        <button
-            className={isBlinking ? 'blink' : ''}
-            onClick={() => handleButtonClick(floor, direction)}
+      {Array.from({ length: floors }, (_, i) => floors - i).map((floor) => (
+        <Box
+          key={floor}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: 1,
+            height: { xs: 56, sm: 64 },
+            borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+          }}
         >
-            {`Call Elevator ${direction === 'up' ? '▲' : '▼'}`}
-        </button>
-    );
-};
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography sx={{ width: 78 }} variant="subtitle2">
+              floor {floor}
+            </Typography>
+            <Button size="small" onClick={() => onRequestFloor(floor)}>▲</Button>
+            <Button size="small" onClick={() => onRequestFloor(floor)}>▼</Button>
+          </Box>
 
-return (
-    <div>
-    <div className="building">
-        <h1>Building: {promps.building.name}</h1>
-        <div className="floors">
-            {Array.from({ length: promps.building.numberOfFloors }, (_, index) => {
-                const floorNumber = promps.building.numberOfFloors - 1 - index;
-                return (
-                    <div key={index} className={`floor ${currentFloor === floorNumber ? 'active' : ''}`}>
-                        {currentFloor === floorNumber && (
-                            <Elevator
-                                currentFloor={currentFloor}
-                                floorNumber={floorNumber}
-                                status={status}
-                                direction={direction}
-                                doorStatus={doorStatus}
-                                showFloorSelection={showFloorSelection} 
-                                handleFloorSelection={(floor) => {
-                                    updateElevatorCall(2 ,"DestinationFloor",floor)
-                                    setCurrentFloor(floor);
-                                    setShowFloorSelection(false); 
-                                }}
-                            />
-                        )}
-                        <div className="floor-number">{`Floor ${floorNumber}`}</div>
-                        <ElevatorButton
-                            floor={floorNumber}
-                            direction="up"
-                        />
-                        <ElevatorButton
-                            floor={floorNumber}
-                            direction="down"
-                        />
-                    </div>
-                );
-            })}
-        </div>
-        {showElevator && <ElevatorCall floor={currentFloor} building={promps.building.id} direction={direction} />}
-       
-    </div>
-    </div>
-);
-};
-
-export default Building;
-
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            {floor === currentFloor && (
+              <Tooltip
+                title={
+                  statusMessage ||
+                  (isMoving
+                    ? `Elevator is moving to floor ${targetFloor ?? "-"}`
+                    : "Elevator is here")
+                }
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <DirectionsCarFilledIcon color="primary" fontSize="small" />
+                  <Typography variant="caption" color="text.primary">
+                    {isMoving ? "Moving" : "Idle"}
+                  </Typography>
+                </Box>
+              </Tooltip>
+            )}
+          </Box>
+        </Box>
+      ))}
+    </Box>
+  );
+}

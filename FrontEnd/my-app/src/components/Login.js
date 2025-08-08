@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './Login.css';
-import Building from './Building';
-import { fetchUserData } from '../servers/UserServer';
+import { getUser, createUser } from '../components/servers/UserService';
 import BuildingView from './BuildingView';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserId } from '../redux/ActionCreator';
 
 function Login() {
@@ -26,13 +25,18 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await fetchUserData(userData);
-        debugger;
-
-        setUserData({ ...userData, id: data.id });
-            dispatch(setUserId(data.id)); 
-
-        setIsLoggedIn(true);
+        let data;
+        try {
+            data = await getUser(userData.password);
+            if (!data) {
+                data = await createUser(userData);
+            }
+            setUserData({ ...userData, id: data.id });
+            dispatch(setUserId(data.id));
+            setIsLoggedIn(true);
+        } catch (err) {
+            alert('Error during login/registration');
+        }
     };
 
     const toggleRegistering = () => {
@@ -44,49 +48,51 @@ function Login() {
     }
 
     return (
-        <div className="login-container">
-            <h2 className="login-title">{isRegistering ? 'Register' : 'Login'}</h2>
-            <form className="login-form" onSubmit={handleSubmit}>
-                {isRegistering && (
+        <div className="auth-container">
+            <div className="login-card">
+                <h2 className="login-title">{isRegistering ? 'Register' : 'Login'}</h2>
+                <form className="auth-form" onSubmit={handleSubmit}>
+                    {isRegistering && (
+                        <div className="form-group">
+                            <label htmlFor="id">ID</label>
+                            <input
+                                type="text"
+                                name="id"
+                                value={userData.id}
+                                onChange={handleChange}
+                                placeholder="ID"
+                                required={isRegistering}
+                            />
+                        </div>
+                    )}
                     <div className="form-group">
-                        <label htmlFor="id">ID</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             type="text"
-                            name="id"
-                            value={userData.id}
+                            name="email"
+                            value={userData.email}
                             onChange={handleChange}
-                            placeholder="ID"
-                            required={isRegistering}
+                            placeholder="Email"
+                            required
                         />
                     </div>
-                )}
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="text"
-                        name="email"
-                        value={userData.email}
-                        onChange={handleChange}
-                        placeholder="Email"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={userData.password}
-                        onChange={handleChange}
-                        placeholder="Password"
-                        required
-                    />
-                </div>
-                <button className="login-btn" type="submit">{isRegistering ? 'Register' : 'Login'}</button>
-            </form>
-            <button className="register-btn" onClick={toggleRegistering}>
-                {isRegistering ? 'Switch to Login' : 'Switch to Register'}
-            </button>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            value={userData.password}
+                            onChange={handleChange}
+                            placeholder="Password"
+                            required
+                        />
+                    </div>
+                    <button className="submit-button" type="submit">{isRegistering ? 'Register' : 'Login'}</button>
+                </form>
+                <button className="toggle-button" onClick={toggleRegistering}>
+                    {isRegistering ? 'Switch to Login' : 'Switch to Register'}
+                </button>
+            </div>
         </div>
     );
 }
