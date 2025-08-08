@@ -1,0 +1,309 @@
+ .building-view-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.building-view-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    font-size: 24px;
+    color: white;
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.header-section h1 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 36px;
+    font-weight: 300;
+}
+
+.back-button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    right: 0;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.error-message {
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.building-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.info-card, .elevator-call-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.info-card h3, .elevator-call-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 22px;
+    text-align: right;
+}
+
+.info-card p {
+    margin: 10px 0;
+    font-size: 16px;
+    text-align: right;
+}
+
+.call-form {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.call-form input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.call-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.call-form button {
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.call-form button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.elevators-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 300;
+}
+
+.elevators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+}
+
+.elevator-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.elevator-card:hover {
+    transform: translateY(-5px);
+}
+
+.elevator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.elevator-header h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status.available {
+    background: rgba(40, 167, 69, 0.8);
+}
+
+.status.busy {
+    background: rgba(255, 193, 7, 0.8);
+    color: #333;
+}
+
+.status.maintenance {
+    background: rgba(220, 53, 69, 0.8);
+}
+
+.elevator-details {
+    margin-bottom: 25px;
+}
+
+.elevator-details p {
+    margin: 8px 0;
+    font-size: 14px;
+    text-align: right;
+}
+
+.elevator-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.elevator-shaft {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 80px;
+}
+
+.floor {
+    height: 30px;
+    margin: 2px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.floor.current {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.floor-number {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.elevator-car {
+    font-size: 16px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.no-elevators {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.calls-section {
+    margin-top: 40px;
+}
+
+.calls-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.calls-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.call-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.call-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.call-status.pending {
+    background: rgba(255, 193, 7, 0.8);
+    color: #333;
+}
+
+.call-status.completed {
+    background: rgba(40, 167, 69, 0.8);
+}
+
+ @media (max-width: 768px) {
+    .building-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .elevators-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header-section h1 {
+        font-size: 28px;
+    }
+    
+    .call-form {
+        flex-direction: column;
+    }
+} 

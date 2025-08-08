@@ -1,0 +1,98 @@
+/* Center the building and its content */
+.building-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    width: 100%;
+    padding: 24px 0;
+}
+
+.building-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #357ab8;
+    margin-bottom: 18px;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-shadow: 0 2px 12px #e3ecfa;
+}
+
+.building-visual {
+    background: linear-gradient(135deg, #e3ecfa 0%, #f8fafc 100%);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(74,144,226,0.13), 0 1.5px 8px rgba(44,62,80,0.08);
+    padding: 32px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+}
+
+.movement-history {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.movement-history h2 {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.movement-history table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.movement-history th, 
+.movement-history td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.status-Idle {
+    color: gray;
+    font-weight: bold;
+}
+
+.status-Moving {
+    color: blue;
+    font-weight: bold;
+}
+
+.door-Open {
+    color: green;
+    font-weight: bold;
+}
+
+.door-Closed {
+    color: red;
+    font-weight: bold;
+}
+
+.movement-history tr:hover {
+    background-color: #f1f1f1;
+}
+@keyframes rowHighlight {
+    0% { background-color: #fff7cc; }
+    100% { background-color: transparent; }
+}
+
+.new-row {
+    animation: rowHighlight 1.5s ease-out;
+}
