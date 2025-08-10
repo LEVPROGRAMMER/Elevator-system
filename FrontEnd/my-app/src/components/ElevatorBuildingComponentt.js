@@ -151,7 +151,6 @@ export default function ElevatorBuildingComponent({
         setCurrentFloor((cf) => {
           let nextFloor = cf < targetFloor ? cf + 1 : cf - 1;
 
-          // עצירה אם הקומה בדרך קיימת בתור
           if (queue.includes(nextFloor)) {
             clearInterval(timerRef.current);
             timerRef.current = null;
@@ -161,7 +160,6 @@ export default function ElevatorBuildingComponent({
             return nextFloor;
           }
 
-          // עצירה ביעד הסופי
           if (nextFloor === targetFloor) {
             clearInterval(timerRef.current);
             timerRef.current = null;
