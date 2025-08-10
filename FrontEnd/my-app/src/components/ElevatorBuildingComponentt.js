@@ -149,22 +149,36 @@ export default function ElevatorBuildingComponent({
       if (timerRef.current) clearInterval(timerRef.current);
       timerRef.current = setInterval(() => {
         setCurrentFloor((cf) => {
-          if (cf === targetFloor) {
+          let nextFloor = cf < targetFloor ? cf + 1 : cf - 1;
+
+          // עצירה אם הקומה בדרך קיימת בתור
+          if (queue.includes(nextFloor)) {
             clearInterval(timerRef.current);
             timerRef.current = null;
-            setQueue((q) => q.filter((f) => f !== cf));
+            setQueue((q) => q.filter((f) => f !== nextFloor));
             setPhase("doorOpening");
             setStatusMessage("doorOpening");
-            return cf;
+            return nextFloor;
           }
-          return cf < targetFloor ? cf + 1 : cf - 1;
+
+          // עצירה ביעד הסופי
+          if (nextFloor === targetFloor) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+            setQueue((q) => q.filter((f) => f !== nextFloor));
+            setPhase("doorOpening");
+            setStatusMessage("doorOpening");
+            return nextFloor;
+          }
+
+          return nextFloor;
         });
       }, moveInterval);
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [phase, targetFloor, moveInterval]);
+  }, [phase, targetFloor, moveInterval, queue]);
 
   useEffect(() => {
     if (phase === "doorOpening") {
