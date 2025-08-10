@@ -7,14 +7,14 @@ export async function getUsers() {
 }
 
 export async function getUser(id) {
-    debugger
   const res = await fetch(`${API_URL}GetUserByPassword/password?password=${id}`);
+  if(res.status !== 200) return[];
   if (!res.ok) throw new Error('Failed to fetch user');
   return res.json();
 }
 
-export async function createUser(data) {
-  const res = await fetch(`${API_URL}/AddUser`, {
+export async function createUser(data) {  
+  const res = await fetch(`${API_URL}AddUser/User`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

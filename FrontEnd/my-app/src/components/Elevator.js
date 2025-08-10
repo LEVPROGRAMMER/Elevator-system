@@ -62,10 +62,9 @@ export default function Elevator({
             top: `${cabinTopPercent}%`,
             transition: `top ${Math.max(300, moveInterval)}ms cubic-bezier(.22,.9,.2,1)`,
             boxShadow: (theme) =>
-              `0 6px 14px ${
-                theme.palette.mode === "light"
-                  ? "rgba(18,38,63,0.08)"
-                  : "rgba(0,0,0,0.6)"
+              `0 6px 14px ${theme.palette.mode === "light"
+                ? "rgba(18,38,63,0.08)"
+                : "rgba(0,0,0,0.6)"
               }`,
           }}
         >
@@ -104,4 +103,4 @@ export default function Elevator({
       )}
     </Paper>
   );
-}
+};

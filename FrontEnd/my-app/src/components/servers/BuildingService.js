@@ -6,15 +6,15 @@ export async function getBuildings() {
   return res.json();
 }
 
-export async function getBuilding(id) {
+export async function getBuilding(id) {  
   const res = await fetch(`${API_URL}GetBuildingByUser/Id?Id=${id}`);
   if (!res.ok) throw new Error('Failed to fetch building');
   return res.json();
 }
 
 
-export async function createBuilding(data) {
-  const res = await fetch(`${API_URL}AddBuilding`, {
+export async function createBuilding(data) {  
+  const res = await fetch(`${API_URL}AddBuilding/Building`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

@@ -12,8 +12,8 @@ function Login() {
         password: '',
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isRegistering, setIsRegistering] = useState(false); 
-       const dispatch = useDispatch(); 
+    const [isRegistering, setIsRegistering] = useState(false);
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,12 +27,13 @@ function Login() {
         e.preventDefault();
         let data;
         try {
-            data = await getUser(userData.password);
-            if (!data) {
+            data = (await getUser(userData.password));
+            if (data.length == 0) {
                 data = await createUser(userData);
             }
             setUserData({ ...userData, id: data.id });
-            dispatch(setUserId(data.id));
+            
+            dispatch(setUserId(userData.id || data.id));
             setIsLoggedIn(true);
         } catch (err) {
             alert('Error during login/registration');
@@ -40,7 +41,8 @@ function Login() {
     };
 
     const toggleRegistering = () => {
-        setIsRegistering(!isRegistering); 
+        console.log('Toggling registration state');
+        setIsRegistering(!isRegistering);
     };
 
     if (isLoggedIn) {
