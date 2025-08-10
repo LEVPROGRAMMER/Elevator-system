@@ -13,7 +13,7 @@ export async function getElevatorCall(id) {
 }
 
 export async function createElevatorCall(data) {
-  const res = await fetch(`${API_URL}AddElevatorCall`, {
+  const res = await fetch(`${API_URL}AddElevatorCall/ElevatorCall`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

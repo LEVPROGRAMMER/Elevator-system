@@ -3,8 +3,8 @@ import './BuildingView.css';
 import AddBuilding from './AddBuilding';
 import { useSelector } from 'react-redux';
 import ElevatorBuildingComponentt from './ElevatorBuildingComponentt';
-import { getBuildings } from '../components/servers/BuildingService';
-import { getElevators } from '../components/servers/ElevatorService';
+import { getBuilding } from '../components/servers/BuildingService';
+import { getElevatorByBuilding } from '../components/servers/ElevatorService';
 import { getElevatorCalls } from '../components/servers/ElevatorCallService';
 
 function BuildingView() {
@@ -12,27 +12,16 @@ function BuildingView() {
     const [elevators, setElevators] = useState([]);
     const [elevatorCalls, setElevatorCalls] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
     const userId = useSelector(state => state.userId);
     const [selectedBuilding, setSelectedBuilding] = useState(null);
 
     useEffect(() => {
         const fetchBuildingData = async () => {
             try {
-                setLoading(true);
-                const buildingData = await getBuildings();
-                setBuildings(buildingData);
-                const allElevators = await getElevators();
-                const buildingElevators = allElevators.filter(elevator =>
-                    buildings.buildingId === undefined || elevator.buildingId === buildings.buildingId || allElevators.length === 1
-                );
-                setElevators(buildingElevators);
-                try {
-                    const allCalls = await getElevatorCalls();
-                    setElevatorCalls(allCalls);
-                } catch (callError) {
-                    console.log('No elevator calls available');
-                }
+                setLoading(true);                                
+                const buildingData = await getBuilding(userId);
+                setBuildings(buildingData)
             } catch (err) {
                 setError('Error loading building data');
                 console.error('Error fetching building data:', err);
@@ -61,7 +50,7 @@ function BuildingView() {
             <div className="building-view-container">
                 <div className="building-view-wrapper">
                     <div className="header-section">
-                        <h1>Building:</h1>
+                        <h1>Building</h1>
                     </div>
 
                     {error && (

@@ -1,90 +1,62 @@
-
-.elevator-container, .elevator-title, .elevator-status, .floor-buttons, .floor-buttons button {
-  all: unset;
-}
-
 body, * {
-  box-sizing: border-box !important;
-  font-family: Arial, sans-serif !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .elevator-container {
-  background: #ffffff !important;
-  border-radius: 12px !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
-  padding: 16px !important;
-  width: 280px !important;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(74,144,226,0.12);
+  padding: 24px 20px;
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .elevator-title {
-  font-size: 18px !important;
-  font-weight: bold !important;
-  margin-bottom: 12px !important;
-  color: #444 !important;
-}
-
-.elevator-status p {
-  margin: 4px 0 !important;
-  font-size: 14px !important;
-  color: #555 !important;
-}
-
-.floor-buttons {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 8px !important;
-  margin-top: 12px !important;
-}
-
-.floor-buttons button {
-  background: #007bff !important;
-  color: white !important;
-  border: none !important;
-  padding: 8px 0 !important;
-  border-radius: 8px !important;
-  cursor: pointer !important;
-  font-weight: bold !important;
-  transition: background 0.2s !important;
-}
-
-.floor-buttons button:hover {
-  background: #0056b3 !important;
-}
-
-.elevator-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
-  margin-bottom: 12px;
-  color: #444;
+  margin-bottom: 16px;
+  color: #357ab8;
+  letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .elevator-status p {
-  margin: 4px 0;
-  font-size: 14px;
+  margin: 6px 0;
+  font-size: 15px;
   color: #555;
+  text-align: center;
 }
 
 .floor-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-top: 12px;
+  gap: 12px;
+  margin-top: 18px;
+  width: 100%;
 }
 
 .floor-buttons button {
-  background: #007bff;
-  color: white;
+  background: linear-gradient(135deg, #4a90e2 60%, #357ab8 100%);
+  color: #fff !important;
   border: none;
-  padding: 8px 0;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.1rem;
   font-weight: bold;
-  transition: background 0.2s;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(74,144,226,0.10);
+  transition: background 0.2s, transform 0.1s;
+  outline: none;
 }
 
 .floor-buttons button:hover {
-  background: #0056b3;
+  background: linear-gradient(135deg, #357ab8 60%, #4a90e2 100%);
+  transform: scale(1.08);
 }
-

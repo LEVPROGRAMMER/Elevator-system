@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AddBuilding.css';
 import { useSelector } from 'react-redux';
 import { createBuilding } from './servers/BuildingService';
@@ -14,7 +14,7 @@ function AddBuilding() {
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const userId = useSelector(state => state.userId); 
+    const userId = useSelector(state => state.userId);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,7 +30,7 @@ function AddBuilding() {
         setIsLoading(true);
         try {
             const building = {
-                id: 1,
+                id: Math.floor(Math.random() * 10000),
                 userId: userId,
                 name: buildingData.name,
                 numberOfFloors: parseInt(buildingData.floors)
@@ -64,8 +64,9 @@ function AddBuilding() {
             setIsLoading(false);
         }
     };
-
-    return (
+ useEffect(() => {
+  }, [buildingData]);   
+   return (
         <div className="add-building-container">
             <div className="form-wrapper">
                 <div className="header-with-back">

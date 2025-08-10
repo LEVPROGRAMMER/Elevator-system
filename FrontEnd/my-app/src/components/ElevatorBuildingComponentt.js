@@ -13,7 +13,7 @@ import {
 import Elevator from "./Elevator";
 import Building from "./Building";
 import { createElevatorCall } from "./servers/ElevatorCallService";
-
+import * as signalR from "@microsoft/signalr";
 export default function ElevatorBuildingComponent({
   props,
   moveInterval = 600,
@@ -27,26 +27,55 @@ export default function ElevatorBuildingComponent({
 
   const timerRef = useRef(null);
   const stopTimeoutRef = useRef(null);
+  const [elevatorStatus, setElevatorStatus] = useState(null);
+  const [connection, setConnection] = useState(null);
+
+  useEffect(() => {
+    const newConnection = new signalR.HubConnectionBuilder()
+      .withUrl("https://localhost:7229/elevatorHub")
+      .build();
+    setConnection(newConnection);
+  }, []);
+
+  useEffect(() => {
+    if (!connection) return;
+    let isMounted = true;
+    connection.start()
+      .then(() => console.log("Connected to ElevatorHub"))
+      .catch(err => console.error(err.toString()));
+
+    connection.on("ReceiveElevatorUpdate", (status) => {
+      if (isMounted) setElevatorStatus(status);
+    });
+    return () => {
+      isMounted = false;
+      connection.stop();
+    };
+  }, [connection]);
 
   async function pushRequest(f) {
-    if (f === currentFloor && phase === "idle") return;
+    if (f === currentFloor && phase === "idle") {
+      setPhase("doorOpening");
+      setStatusMessage("doorOpening");
+      return;
+    }
 
     setQueue((q) => {
       if (q.includes(f) || (f === targetFloor && phase === "moving")) return q;
       return [...q, f];
     });
 
-    try {
-      await createElevatorCall({
-        buildingId: props.id,
-        requestedFloor: currentFloor,
-        destinationFloor: f,
-        callTime: new Date().toISOString(),
-        isHandled: false,
-      });
-    } catch (err) {
-      console.error("Error sending elevator call:", err);
-    }
+     try {
+        await createElevatorCall({
+          buildingId: props.id,
+          requestedFloor: currentFloor,
+          destinationFloor: f,
+          callTime: new Date().toISOString(),
+          isHandled: false,
+        });
+      } catch (err) {
+        console.error("Error sending elevator call:", err);
+      }
   }
 
   function getNextFloor() {
@@ -77,12 +106,13 @@ export default function ElevatorBuildingComponent({
 
   useEffect(() => {
     if (phase === "idle" && queue.length > 0) {
-      const next = getNextFloor();
-      if (next !== null) {
-        setTargetFloor(next);
-        setPhase("moving");
-        setStatusMessage(`moving -> ${next}`);
+      let next = getNextFloor();
+      if (next == null) {
+        next = queue[0];
       }
+      setPhase("moving");
+      setTargetFloor(next);
+      setStatusMessage(`moving -> ${next}`);
     }
   }, [phase, queue]);
 
