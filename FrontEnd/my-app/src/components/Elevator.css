@@ -42,8 +42,8 @@ body, * {
 }
 
 .floor-buttons button {
-  background: linear-gradient(135deg, #4a90e2 60%, #357ab8 100%);
-  color: #fff !important;
+  /* background: linear-gradient(135deg, #4a90e2 60%, #357ab8 100%); */
+  color: #e30909 !important;
   border: none;
   border-radius: 50%;
   width: 44px;

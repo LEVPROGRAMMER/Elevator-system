@@ -4,13 +4,9 @@ import AddBuilding from './AddBuilding';
 import { useSelector } from 'react-redux';
 import ElevatorBuildingComponentt from './ElevatorBuildingComponentt';
 import { getBuilding } from '../components/servers/BuildingService';
-import { getElevatorByBuilding } from '../components/servers/ElevatorService';
-import { getElevatorCalls } from '../components/servers/ElevatorCallService';
 
 function BuildingView() {
     const [buildings, setBuildings] = useState([]);
-    const [elevators, setElevators] = useState([]);
-    const [elevatorCalls, setElevatorCalls] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const userId = useSelector(state => state.userId);

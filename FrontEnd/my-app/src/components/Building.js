@@ -15,11 +15,11 @@ export default function Building({
       className="hide-scrollbar building-visual"
       sx={{
         flex: 1,
-        maxHeight: { xs: 480, sm: 900 },
+        height: floors * 100,
         minHeight: 320,
         minWidth: 320,
         width: '100%',
-        overflow: "hidden",
+        overflow: "visible",
         margin: '0 auto',
       }}
     >
@@ -60,13 +60,13 @@ export default function Building({
                 }
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                  <DirectionsCarFilledIcon color="primary" fontSize="small" />
                   <Typography variant="caption" color="text.primary">
                     {isMoving ? "Moving" : "Idle"}
                   </Typography>
                 </Box>
               </Tooltip>
             )}
+
           </Box>
         </Box>
       ))}
