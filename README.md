@@ -57,7 +57,7 @@ This project simulates and manages elevators in a building, including handling e
 1. **Clone the repository**
 
 2. **Configure the database**  
-   Ensure your database connection settings in `appsettings.json` are correct.
+   Ensure your database connection settings in `DbContext` are correct.
 
 3. **Run the project**
    - Open the solution in Visual Studio 2022.
