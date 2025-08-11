@@ -55,28 +55,35 @@ export default function ElevatorBuildingComponent({
 
   async function pushRequest(f) {
     if (f === currentFloor && phase === "idle") {
-      setPhase("doorOpening");
-      setStatusMessage("doorOpening");
-      return;
+        setPhase("doorOpening");
+        setStatusMessage("doorOpening");
+        return;
     }
 
     setQueue((q) => {
-      if (q.includes(f) || (f === targetFloor && phase === "moving")) return q;
-      return [...q, f];
+        if (q.includes(f) || (f === targetFloor && phase === "moving")) return q;
+        return [...q, f];
     });
 
-     try {
+    if (queue.length === 0) {
+        setDirection(f > currentFloor ? "up" : "down");
+        setTargetFloor(f);
+        setPhase("moving");
+        setStatusMessage(`moving -> ${f}`);
+    }
+
+    try {
         await createElevatorCall({
-          buildingId: props.id,
-          requestedFloor: currentFloor,
-          destinationFloor: f,
-          callTime: new Date().toISOString(),
-          isHandled: false,
+            buildingId: props.id,
+            requestedFloor: currentFloor,
+            destinationFloor: f,
+            callTime: new Date().toISOString(),
+            isHandled: false,
         });
-      } catch (err) {
+    } catch (err) {
         console.error("Error sending elevator call:", err);
-      }
-  }
+    }
+}
 
   function getNextFloor() {
     if (queue.length === 0) return null;
@@ -165,11 +172,12 @@ export default function ElevatorBuildingComponent({
   }, [phase]);
 
   return (
+
     <div style={{ minHeight: '100vh', background: 'none', boxShadow: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className="login-card hide-scrollbar" style={{ maxWidth: 1500, minWidth: 900, width: '100%', background: 'linear-gradient(135deg, #e3ecfa 0%, #f8fafc 100%)', borderRadius: 28, boxShadow: '0 16px 48px 0 rgba(74,144,226,0.32), 0 4px 16px rgba(44,62,80,0.16)', border: '3px solid #4a90e2', outline: '4px solid #b0c4de', outlineOffset: 3, padding: 48, overflow: 'visible' }}>
         <Grid container spacing={2} alignItems="flex-start">
           <Grid item xs={12} md={7}>
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", gap: 2 ,height:props?.numberOfFloors * 100}}>
               <Elevator
                 floors={props.numberOfFloors}
                 currentFloor={currentFloor}
@@ -178,7 +186,7 @@ export default function ElevatorBuildingComponent({
                 moveInterval={moveInterval}
                 onRequestFloor={pushRequest}
               />
-              <Paper elevation={3} sx={{ flex: 1, overflow: "visible" }}>
+              <Paper elevation={3} sx={{ flex: 1, overflow: "visible",height: props?.numberOfFloors * 100,  }}>
                 <Building
                   floors={props.numberOfFloors}
                   currentFloor={currentFloor}
