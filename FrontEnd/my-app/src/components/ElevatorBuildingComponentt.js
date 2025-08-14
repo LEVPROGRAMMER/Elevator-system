@@ -14,6 +14,7 @@ import Elevator from "./Elevator";
 import Building from "./Building";
 import { createElevatorCall } from "./servers/ElevatorCallService";
 import * as signalR from "@microsoft/signalr";
+
 export default function ElevatorBuildingComponent({
   props,
   moveInterval = 600,
@@ -27,12 +28,12 @@ export default function ElevatorBuildingComponent({
 
   const timerRef = useRef(null);
   const stopTimeoutRef = useRef(null);
-  const [elevatorStatus, setElevatorStatus] = useState(null);
   const [connection, setConnection] = useState(null);
 
   useEffect(() => {
     const newConnection = new signalR.HubConnectionBuilder()
       .withUrl("https://localhost:7229/elevatorHub")
+      .withAutomaticReconnect()
       .build();
     setConnection(newConnection);
   }, []);
@@ -40,50 +41,70 @@ export default function ElevatorBuildingComponent({
   useEffect(() => {
     if (!connection) return;
     let isMounted = true;
-    connection.start()
-      .then(() => console.log("Connected to ElevatorHub"))
-      .catch(err => console.error(err.toString()));
 
-    connection.on("ReceiveElevatorUpdate", (status) => {
-      if (isMounted) setElevatorStatus(status);
-    });
+    async function startConnection() {
+      try {
+        await connection.start();
+        console.log("Connected to ElevatorHub");
+
+        const initialStatus = await fetch(
+          `https://localhost:7229/api/elevator/status?buildingId=${props.id}`
+        ).then((res) => res.json());
+
+        if (isMounted && initialStatus) {
+          setCurrentFloor(initialStatus.currentFloor);
+          setQueue(initialStatus.queue || []);
+          setDirection(initialStatus.direction || null);
+          setStatusMessage(initialStatus.statusMessage || "idle");
+        }
+
+        connection.on("ReceiveElevatorUpdate", (status) => {
+          if (!isMounted) return;
+          setCurrentFloor(status.currentFloor);
+          setQueue(status.queue || []);
+          setDirection(status.direction || null);
+          setStatusMessage(status.statusMessage || "idle");
+          setTargetFloor(status.targetFloor || null);
+          setPhase(status.phase || "idle");
+        });
+
+      } catch (err) {
+        console.error("Error connecting to ElevatorHub:", err);
+      }
+    }
+
+    startConnection();
+
     return () => {
       isMounted = false;
       connection.stop();
     };
-  }, [connection]);
+  }, [connection, props.id]);
 
   async function pushRequest(f) {
     if (f === currentFloor && phase === "idle") {
-        setPhase("doorOpening");
-        setStatusMessage("doorOpening");
-        return;
+      setPhase("doorOpening");
+      setStatusMessage("doorOpening");
+      return;
     }
 
     setQueue((q) => {
-        if (q.includes(f) || (f === targetFloor && phase === "moving")) return q;
-        return [...q, f];
+      if (q.includes(f) || (f === targetFloor && phase === "moving")) return q;
+      return [...q, f];
     });
 
-    if (queue.length === 0) {
-        setDirection(f > currentFloor ? "up" : "down");
-        setTargetFloor(f);
-        setPhase("moving");
-        setStatusMessage(`moving -> ${f}`);
-    }
-
     try {
-        await createElevatorCall({
-            buildingId: props.id,
-            requestedFloor: currentFloor,
-            destinationFloor: f,
-            callTime: new Date().toISOString(),
-            isHandled: false,
-        });
+      await createElevatorCall({
+        buildingId: props.id,
+        requestedFloor: currentFloor,
+        destinationFloor: f,
+        callTime: new Date().toISOString(),
+        isHandled: false,
+      });
     } catch (err) {
-        console.error("Error sending elevator call:", err);
+      console.error("Error sending elevator call:", err);
     }
-}
+  }
 
   function getNextFloor() {
     if (queue.length === 0) return null;
@@ -172,12 +193,11 @@ export default function ElevatorBuildingComponent({
   }, [phase]);
 
   return (
-
     <div style={{ minHeight: '100vh', background: 'none', boxShadow: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className="login-card hide-scrollbar" style={{ maxWidth: 1500, minWidth: 900, width: '100%', background: 'linear-gradient(135deg, #e3ecfa 0%, #f8fafc 100%)', borderRadius: 28, boxShadow: '0 16px 48px 0 rgba(74,144,226,0.32), 0 4px 16px rgba(44,62,80,0.16)', border: '3px solid #4a90e2', outline: '4px solid #b0c4de', outlineOffset: 3, padding: 48, overflow: 'visible' }}>
         <Grid container spacing={2} alignItems="flex-start">
           <Grid item xs={12} md={7}>
-            <Box sx={{ display: "flex", gap: 2 ,height:props?.numberOfFloors * 100}}>
+            <Box sx={{ display: "flex", gap: 2, height: props?.numberOfFloors * 100 }}>
               <Elevator
                 floors={props.numberOfFloors}
                 currentFloor={currentFloor}
@@ -186,7 +206,7 @@ export default function ElevatorBuildingComponent({
                 moveInterval={moveInterval}
                 onRequestFloor={pushRequest}
               />
-              <Paper elevation={3} sx={{ flex: 1, overflow: "visible",height: props?.numberOfFloors * 100,  }}>
+              <Paper elevation={3} sx={{ flex: 1, overflow: "visible", height: props?.numberOfFloors * 100 }}>
                 <Building
                   floors={props.numberOfFloors}
                   currentFloor={currentFloor}
