@@ -9,6 +9,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Divider,
 } from "@mui/material";
 import Elevator from "./Elevator";
 import Building from "./Building";
@@ -45,7 +46,6 @@ export default function ElevatorBuildingComponent({
     async function startConnection() {
       try {
         await connection.start();
-        console.log("Connected to ElevatorHub");
 
         const initialStatus = await fetch(
           `https://localhost:7229/api/elevator/status?buildingId=${props.id}`
@@ -67,7 +67,6 @@ export default function ElevatorBuildingComponent({
           setTargetFloor(status.targetFloor || null);
           setPhase(status.phase || "idle");
         });
-
       } catch (err) {
         console.error("Error connecting to ElevatorHub:", err);
       }
@@ -205,72 +204,137 @@ export default function ElevatorBuildingComponent({
   }, [phase]);
 
   return (
-    <div style={{ minHeight: '100vh', background: 'none', boxShadow: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div className="login-card hide-scrollbar" style={{ maxWidth: 1500, minWidth: 900, width: '100%', background: 'linear-gradient(135deg, #e3ecfa 0%, #f8fafc 100%)', borderRadius: 28, boxShadow: '0 16px 48px 0 rgba(74,144,226,0.32), 0 4px 16px rgba(44,62,80,0.16)', border: '3px solid #4a90e2', outline: '4px solid #b0c4de', outlineOffset: 3, padding: 48, overflow: 'visible' }}>
-        <Grid container spacing={2} alignItems="flex-start">
-          <Grid item xs={12} md={7}>
-            <Box sx={{ display: "flex", gap: 2, height: props?.numberOfFloors * 100 }}>
-              <Elevator
-                floors={props.numberOfFloors}
-                currentFloor={currentFloor}
-                isMoving={phase === "moving"}
-                targetFloor={targetFloor}
-                moveInterval={moveInterval}
-                onRequestFloor={pushRequest}
-              />
-              <Paper elevation={3} sx={{ flex: 1, overflow: "visible", height: props?.numberOfFloors * 100 }}>
-                <Building
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        p: 4,
+        background: "linear-gradient(135deg, #edf2fb 0%, #dbeafe 100%)",
+      }}
+    >
+      <Card
+        sx={{
+          width: "100%",
+          maxWidth: 1400,
+          borderRadius: 4,
+          boxShadow:
+            "0 16px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08)",
+          overflow: "hidden",
+        }}
+      >
+        <CardContent sx={{ p: 4 }}>
+          <Grid container spacing={4} alignItems="stretch">
+            <Grid item xs={12} md={7}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  height: props?.numberOfFloors * 90,
+                  justifyContent: "center",
+                  alignItems: "stretch",
+                }}
+              >
+                <Elevator
                   floors={props.numberOfFloors}
                   currentFloor={currentFloor}
                   isMoving={phase === "moving"}
                   targetFloor={targetFloor}
-                  statusMessage={statusMessage}
+                  moveInterval={moveInterval}
                   onRequestFloor={pushRequest}
-                  name={props.name}
                 />
-              </Paper>
-            </Box>
-          </Grid>
+                <Paper
+                  elevation={4}
+                  sx={{
+                    flex: 1,
+                    borderRadius: 3,
+                    overflow: "hidden",
+                    background: "white",
+                    border: "2px solid #3b82f6",
+                  }}
+                >
+                  <Building
+                    floors={props.numberOfFloors}
+                    currentFloor={currentFloor}
+                    isMoving={phase === "moving"}
+                    targetFloor={targetFloor}
+                    statusMessage={statusMessage}
+                    onRequestFloor={pushRequest}
+                    name={props.name}
+                  />
+                </Paper>
+              </Box>
+            </Grid>
 
-          <Grid item xs={12} md={5}>
-            <Typography>
-              Current Floor: <strong>{currentFloor}</strong>
-            </Typography>
-            <Typography>
-              Status: <strong>{statusMessage}</strong>
-            </Typography>
-
-            <Paper elevation={3} sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <Typography variant="h6" gutterBottom>
-                Request Queue
-              </Typography>
-              {queue.length === 0 ? (
-                <Typography variant="body2" color="text.secondary">
-                  No requests at the moment
+            <Grid item xs={12} md={5}>
+              <Paper
+                elevation={4}
+                sx={{
+                  p: 3,
+                  borderRadius: 3,
+                  background: "linear-gradient(145deg, #f0f9ff, #e0f2fe)",
+                  border: "1px solid #bae6fd",
+                }}
+              >
+                <Typography variant="h5" gutterBottom sx={{ color: "#0369a1" }}>
+                  Elevator Status
                 </Typography>
-              ) : (
-                <List>
-                  {queue
-                    .slice()
-                    .sort((a, b) => (direction === "up" ? a - b : b - a))
-                    .map((floor, index) => (
-                      <ListItem key={`${floor}-${index}`}>
-                        <ListItemText
-                          primary={`Floor ${floor}`}
-                          secondary={
-                            index === 0
-                              ? "Next request"
-                              : `Request #${index + 1}`
-                          }
-                        />
-                      </ListItem>
-                    ))}
-                </List>
-              )}
-            </Paper>
+                <Divider sx={{ mb: 2 }} />
+                <Typography>
+                  Current Floor: <strong>{currentFloor}</strong>
+                </Typography>
+                <Typography>
+                  Status: <strong>{statusMessage}</strong>
+                </Typography>
+              </Paper>
+
+              <Paper
+                elevation={4}
+                sx={{
+                  mt: 4,
+                  p: 3,
+                  borderRadius: 3,
+                  background: "linear-gradient(145deg, #f0fdf4, #dcfce7)",
+                  border: "1px solid #bbf7d0",
+                }}
+              >
+                <Typography variant="h6" gutterBottom sx={{ color: "#166534" }}>
+                  Request Queue
+                </Typography>
+                {queue.length === 0 ? (
+                  <Typography variant="body2" color="text.secondary">
+                    No requests at the moment
+                  </Typography>
+                ) : (
+                  <List>
+                    {queue
+                      .slice()
+                      .sort((a, b) =>
+                        direction === "up" ? a - b : b - a
+                      )
+                      .map((floor, index) => (
+                        <ListItem
+                          key={`${floor}-${index}`}
+                          sx={{
+                            borderBottom: "1px dashed #d1fae5",
+                          }}
+                        >
+                          <ListItemText
+                            primary={`Floor ${floor}`}
+                            secondary={
+                              index === 0 ? "Next request" : `Request #${index + 1}`
+                            }
+                          />
+                        </ListItem>
+                      ))}
+                  </List>
+                )}
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

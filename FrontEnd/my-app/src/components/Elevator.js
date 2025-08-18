@@ -22,7 +22,7 @@ export default function Elevator({
       }}
     >
       <Typography variant="caption">
-        Elevator — Current Floor: <strong>{currentFloor}</strong>
+        elevator - current floor : <strong>{currentFloor}</strong>
       </Typography>
 
       <Box
@@ -80,7 +80,7 @@ export default function Elevator({
               border: "1px solid rgba(0,0,0,0.06)",
             }}
           >
-            <Typography variant="subtitle2">Elevator</Typography>
+            <Typography variant="subtitle2">elevator</Typography>
           </Paper>
         </Box>
       </Box>
@@ -95,7 +95,7 @@ export default function Elevator({
                 size="small"
                 onClick={() => onRequestFloor(f)}
               >
-                Floor {f}
+                floor {f}
               </Button>
             </Grid>
           ))}
