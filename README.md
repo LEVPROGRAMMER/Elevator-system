@@ -13,10 +13,6 @@ This project consists of two main directories:
 - **Database:** SQL Server is used for its reliability and support for complex queries.
 - **Real-time** Communication: SignalR is implemented for real-time updates between the server and client.
 
-# Elevator Management System Backend
-
-This project simulates and manages elevators in a building, including handling elevator calls, managing elevator states, and providing real-time updates to clients using SignalR.
-
 ## Main Features
 
 - **Automatic Elevator Call Handling**  
@@ -29,13 +25,14 @@ This project simulates and manages elevators in a building, including handling e
   Elevator status updates are sent to all connected clients in real time via SignalR.
 
 - **RESTful API**  
-  Exposes endpoints for managing elevators, elevator calls, users, and more.
+  Exposes endpoints for managing elevators, elevator calls, users, and buildings using Dapper for data access.
 
 ## Project Structure
 
 - `BL\BlImplementation` - Business logic for elevators and calls.
 - `BL\Bo` - Business objects such as `BLElevator`, `BLElevatorCalls`, etc.
 - `Dal\Do` - Data objects and data access interfaces.
+- `Dal\DalImplementation` - Implementation of data access using Dapper for efficient database interactions.
 - `Server` - ASP.NET Core server, including configuration, SignalR, and API controllers.
 
 ## Key Files
@@ -49,15 +46,18 @@ This project simulates and manages elevators in a building, including handling e
 - `BLElevatorService.cs`, `BLElevatorCallService.cs`  
   Business logic services for managing elevators and calls.
 
+- `BuildingService.cs`  
+  Service that manages building data using Dapper for SQL queries.
+
 - `appsettings.json`  
-  General configuration, including the background service interval.
+  General configuration, including the background service interval and database connection settings.
 
 ## Getting Started
 
 1. **Clone the repository**
 
 2. **Configure the database**  
-   Ensure your database connection settings in `DbContext` are correct.
+   Ensure your database connection settings in `DbContext`, `appsettings`, `DalManager` are correct.
 
 3. **Run the project**
    - Open the solution in Visual Studio 2022.
@@ -73,6 +73,7 @@ This project simulates and manages elevators in a building, including handling e
 - ASP.NET Core Web API
 - SignalR
 - Entity Framework Core
+- Dapper
 
 # Elevator System FrontEnd
 
